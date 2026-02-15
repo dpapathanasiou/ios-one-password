@@ -7,15 +7,37 @@
 
 import SwiftUI
 
-// Placeholder functions for the onepassword package
-func getCandidatePwd(_ passphrase: String, _ username: String, _ host: String, _ seed: Int, _ iteration: Int) -> String {
-    // Dummy implementation - replace with actual password generation logic
-    return "dummyPassword"
-}
+public func createPassword(
+    passphrase: String,
+    hostname: String,
+    username: String,
+    passwordLength: Int,
+    specials: String
+) -> String {
+    var i = 0
+    var candidate: String = ""
+    var isValid = false
 
-func pwdIsValid(_ password: String, _ size: Int) -> Bool {
-    // Dummy validation - replace with actual validation logic
-    return true
+    while !isValid {
+        guard let result = OnePassword.getCandidatePwd(
+                passphrase: passphrase,
+                username: username,
+                host: hostname,
+                generation: 12,
+                iteration: i
+        ) else {
+            // if candidate generation fails, simply bump the iteration and try again
+            i += 1
+            continue
+        }
+
+        candidate = result
+        isValid = OnePassword.pwdIsValid(candidate, pwdLen: passwordLength)
+
+        i += 1
+    }
+    
+    return candidate
 }
 
 struct ContentView: View {
@@ -23,7 +45,7 @@ struct ContentView: View {
     @State private var username: String = ""
     @State private var passphrase: String = ""
     @State private var showPassphrase: Bool = false
-    @State private var passwordLength: Int = 16 // Use Int for the stepper
+    @State private var passwordLength: Int = 16
     @State private var specialChars: String = ""
     @State private var generatedPassword: String = ""
 
@@ -34,13 +56,20 @@ struct ContentView: View {
             generatedPassword = "Please use a positive number greater than or equal to five (5)"
             return
         }
-
-        let password = getCandidatePwd(passphrase, username, siteName, 12, 0)
-        if pwdIsValid(password, passwordLength) {
-            generatedPassword = String(password.prefix(passwordLength - specialChars.count)) + specialChars
-        } else {
-            generatedPassword = "Password is not valid according to the given criteria"
+        
+        guard !siteName.isEmpty, !username.isEmpty, !passphrase.isEmpty else {
+            generatedPassword = "Please fill in all the fields"
+            return
         }
+
+        let password = createPassword(
+            passphrase: passphrase,
+            hostname: siteName,
+            username: username,
+            passwordLength: passwordLength,
+            specials: specialChars
+        )
+        generatedPassword = String(password.prefix(passwordLength - specialChars.count)) + specialChars
     }
 
     func clearFields() {
@@ -57,8 +86,20 @@ struct ContentView: View {
             Form {
                 Section(header: Text("Credentials")) {
                     TextField("Site Name", text: $siteName)
+                        .disableAutocorrection(true)
+                        #if os(iOS)
+                        .textInputAutocapitalization(.never)
+                        #endif
                     TextField("Username", text: $username)
+                        .disableAutocorrection(true)
+                        #if os(iOS)
+                        .textInputAutocapitalization(.never)
+                        #endif
                     SecureField("Passphrase", text: $passphrase)
+                        .disableAutocorrection(true)
+                        #if os(iOS)
+                        .textInputAutocapitalization(.never)
+                        #endif
                         .overlay(Group {
                             if showPassphrase {
                                 Text(passphrase).foregroundColor(.blue).padding([.leading, .trailing], 8)
@@ -91,7 +132,7 @@ struct ContentView: View {
                     Text("Clear")
                 }
             }
-            .navigationTitle("One Password Generator")
+            .navigationTitle("iOS One Password")
         }
     }
 }

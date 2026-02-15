@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		9212880A2F4234C50035CB9A /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 921288092F4234C50035CB9A /* CryptoSwift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		9272FAAE2F01D96400A8F14F /* ios-one-password.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-one-password.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9212880A2F4234C50035CB9A /* CryptoSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = "ios-one-password";
 			packageProductDependencies = (
+				921288092F4234C50035CB9A /* CryptoSwift */,
 			);
 			productName = "ios-one-password";
 			productReference = 9272FAAE2F01D96400A8F14F /* ios-one-password.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = 9272FAA52F01D96400A8F14F;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				921288082F4234C50035CB9A /* XCLocalSwiftPackageReference "CryptoSwift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9272FAAF2F01D96400A8F14F /* Products */;
 			projectDirPath = "";
@@ -345,6 +354,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		921288082F4234C50035CB9A /* XCLocalSwiftPackageReference "CryptoSwift" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = CryptoSwift;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		921288092F4234C50035CB9A /* CryptoSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CryptoSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9272FAA62F01D96400A8F14F /* Project object */;
 }
