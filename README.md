@@ -4,6 +4,6 @@ This is an iOS version of [go-one-password](https://github.com/dpapathanasiou/go
 
 Being a newbie to both [Swift](https://www.swift.org/) and iOS development in general, I enlisted the aid of [devstral:latest](https://ollama.com/library/devstral) and [gpt-oss:latest](https://ollama.com/library/gpt-oss), running locally on [Ollama](https://ollama.com/).
 
-<center>
-![Screenshot](screenshot.png?raw=true)
-</center>
+<p align="center" width="100%">
+    <img width="33%" src="screenshot.png"> 
+</p>
